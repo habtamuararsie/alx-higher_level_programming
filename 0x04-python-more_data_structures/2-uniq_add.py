@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 def uniq_add(my_list=[]):
-    nessi = set(my_list)
+    new = set(my_list)
     res = 0
-    for h in nessi:
+    for h in new:
         rest += h
     return res
