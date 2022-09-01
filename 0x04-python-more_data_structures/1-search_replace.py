@@ -6,4 +6,4 @@ def search_replace(my_list, search, replac):
             habte.append(replace)
         else:
             habte.append(my_list[i])
-            return habte
+    return habte
