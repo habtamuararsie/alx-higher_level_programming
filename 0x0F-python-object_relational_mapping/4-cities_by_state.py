@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
         rows = cur.fetchall()
 
-    if rows is not None:
+    
         for row in rows:
             print(row)
         cur.close()
