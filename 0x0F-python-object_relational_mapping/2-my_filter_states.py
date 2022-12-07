@@ -1,10 +1,15 @@
-#!/usr/bin/python3
+    #!/usr/bin/python3
 """
-Write a script that takes in an argument and displays all values in the states
-table of hbtn_0e_0_usa where name matches the argument
+This script lists all states with
+a `name` starting with the letter `N`
+from the database `hbtn_0e_0_usa`.
 """
 
 if __name__ == "__main__":
+    """
+    Access to the database and get the states
+    from the database.
+    """
     import MySQLdb
     from sys import argv
 
