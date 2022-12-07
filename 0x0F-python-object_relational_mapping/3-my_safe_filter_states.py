@@ -1,21 +1,36 @@
 #!/usr/bin/python3
 """
-Write a script that takes in an argument and displays all values in the states
-table of hbtn_0e_0_usa where name matches the argument
+Task 3:
+3-my_safe_filter_states.py
+Complete previous task again but make sure it's
+    safe from MySQL injections!
+Uses:
+0-select_states.sql
 """
 
 if __name__ == "__main__":
-    
-    import MySQLdb
     from sys import argv
-    
-    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
-                         passwd=argv[2], db=argv[3], charset="utf8")
-    cur = db.cursor()
-    cur.execute("SELECT * FROM states WHERE BINARY name = %s", (argv[4], ))
-    query_rows = cur.fetchall()
+    import MySQLdb
 
-    for row in query_rows:
-        print(row)
+    sql_user = argv[1]
+    sql_pass = argv[2]
+    db_name = argv[3]
+    name_searched = argv[4]
+
+    db = MySQLdb.connect(
+        "localhost",
+        sql_user,
+        sql_pass,
+        db_name
+    )
+
+    cur = db.cursor()
+    amount = cur.execute("SELECT * FROM states ORDER BY states.id;")
+
+    for i in range(0, amount):
+        results = cur.fetchone()
+        if results[1] == name_searched:
+            print("{}".format(results))
+
     cur.close()
     db.close()
