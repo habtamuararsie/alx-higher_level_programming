@@ -5,6 +5,10 @@ table of hbtn_0e_0_usa where name matches the argument
 """
 
 if __name__ == "__main__":
+    """
+    Access to the database and get the states
+    from the database.
+    """
     import MySQLdb
     from sys import argv
 
@@ -13,6 +17,7 @@ if __name__ == "__main__":
     cur = db.cursor()
     cur.execute("SELECT * FROM states WHERE BINARY name = %s", (argv[4], ))
     query_rows = cur.fetchall()
+if query_rows is not None:
     for row in query_rows:
         print(row)
     cur.close()
