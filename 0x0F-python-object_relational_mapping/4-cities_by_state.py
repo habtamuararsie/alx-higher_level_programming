@@ -4,10 +4,11 @@ This script lists all cities from
 the database `hbtn_0e_4_usa`.
 """
 
-import MySQLdb
-from sys import argv
+
 
 if __name__ == '__main__':
+    import MySQLdb
+    from sys import argv
     """
     Access to the database and get the cities
     from the database.
@@ -35,3 +36,5 @@ if __name__ == '__main__':
     if rows is not None:
         for row in rows:
             print(row)
+        cur.close()
+        db.close()    
