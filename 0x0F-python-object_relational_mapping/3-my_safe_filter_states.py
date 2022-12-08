@@ -1,28 +1,16 @@
 #!/usr/bin/python3
-"""List all states where 'name' matches the argument
-But this time, one safe from MySQL injection.
-Username, password, database name, and state name given as user args
-"""
-import sys
+"""Module."""
 import MySQLdb
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1],
-                         passwd=sys.argv[2],
-                         db=sys.argv[3],
-                         host='localhost',
-                         port=3306)
-    cur = db.cursor()
-    cmd = """SELECT id, name
-         FROM states
-         WHERE name=%s
-         ORDER BY id ASC"""
-    cur.execute(cmd, (sys.argv[4],))
-    nStates = cur.fetchall()
-
-    for state in nStates:
-        print(state)
-
+if __name__ == '__main__':
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3], charset="utf8")
+    cur = conn.cursor()
+    cur.execute("select * from states where name = %(name)s ORDER BY id ASC",
+                {'name': argv[4]})
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        print(row)
     cur.close()
-    db.close()
-    
+    conn.close()
