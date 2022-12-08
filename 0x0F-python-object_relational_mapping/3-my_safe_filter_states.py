@@ -1,36 +1,16 @@
 #!/usr/bin/python3
-"""
-Task 3:
-3-my_safe_filter_states.py
-Complete previous task again but make sure it's
-    safe from MySQL injections!
-Uses:
-0-select_states.sql
-"""
+"""Module."""
+import MySQLdb
+from sys import argv
 
-if __name__ == "__main__":
-    from sys import argv
-    import MySQLdb
-
-    sql_user = argv[1]
-    sql_pass = argv[2]
-    db_name = argv[3]
-    name_searched = argv[4]
-
-    db = MySQLdb.connect(
-        "localhost",
-        sql_user,
-        sql_pass,
-        db_name
-    )
-
-    cur = db.cursor()
-    amount = cur.execute("SELECT * FROM states ORDER BY states.id;")
-
-    for i in range(0, amount):
-        results = cur.fetchone()
-        if results[1] == name_searched:
-            print("{}".format(results))
-
+if __name__ == '__main__':
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3], charset="utf8")
+    cur = conn.cursor()
+    cur.execute("select * from states where name = %(name)s ORDER BY id ASC",
+                {'name': argv[4]})
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        print(row)
     cur.close()
-    db.close()
+    conn.close()
