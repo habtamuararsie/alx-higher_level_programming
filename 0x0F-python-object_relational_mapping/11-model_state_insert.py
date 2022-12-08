@@ -1,29 +1,25 @@
 #!/usr/bin/python3
 """
-This script adds the State object
-`Louisiana` to the database `hbtn_0e_6_usa`.
+adds the State object Louisiana to a database
 """
 
-from sys import argv
-from model_state import Base, State
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sys import argv
+from model_state import Base, State
+
 
 if __name__ == "__main__":
-    """
-    Access to the database and get a state
-    from the database.
-    """
-
-    db_uri = 'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-        argv[1], argv[2], argv[3])
-    engine = create_engine(db_uri)
-    Session = sessionmaker(bind=engine)
-
+    eng = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(argv[1],
+                                                                    argv[2],
+                                                                    argv[3]))
+    Base.metadata.create_all(eng)
+    Session = sessionmaker(bind=eng)
     session = Session()
-
-    lou_state = State(name='Louisiana')
-    session.add(lou_state)
+    new_state = State(name='Louisiana')
+    session.add(new_state)
+    state = session.query(State).filter_by(name='Louisiana').first()
+    print(str(state.id))
     session.commit()
-    print('{0}'.format(lou_state.id))
     session.close()
