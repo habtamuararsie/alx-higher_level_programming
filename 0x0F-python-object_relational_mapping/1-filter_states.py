@@ -18,9 +18,4 @@ if __name__ == "__main__":
         if row[1][0] == 'N':
             print(row)
     cursor.close()
-<<<<<<< HEAD
-    db.close()  
-=======
     db.close()
-    
->>>>>>> 7b3e9e7eae189b96a9048b8c133733c0f515038e
